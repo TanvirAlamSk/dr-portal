@@ -1,12 +1,22 @@
-import React from 'react';
-import AvailableServices from './AvailableServices/AvailableServices';
-import TimeDateSection from './TimeDateSection/TimeDateSection';
+import React, { useState } from 'react';
+import { format } from 'date-fns';
+import AppointmentSection from './AppointmentSection/AppointmentSection';
+import AvailableSlot from './AvailableSlot/AvailableSlot';
 
 const Appointment = () => {
+    const [selected, setSelected] = useState(new Date());
+    let footer = "Please pick a date";
+    if (selected) {
+        footer = <p>You picked {format(selected, 'PPP')}</p>
+    }
+
     return (
         <div>
-            <AvailableServices></AvailableServices>
-            <TimeDateSection></TimeDateSection>
+            <AppointmentSection
+                selected={selected} setSelected={setSelected} footer={footer}>
+            </AppointmentSection>
+            <AvailableSlot selected={format(selected, 'PPP')}></AvailableSlot>
+
         </div>
     );
 };

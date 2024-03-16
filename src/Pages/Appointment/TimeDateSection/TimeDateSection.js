@@ -1,23 +1,16 @@
-import React, { useState } from 'react';
-import { format } from 'date-fns';
+import React from 'react';
 import { DayPicker } from 'react-day-picker';
-import 'react-day-picker/dist/style.css';
 
-const TimeDateSection = () => {
-    const [selected, setSelected] = useState()
 
-    let footer = "Please pick a date";
-    if (selected) {
-        // footer = <p>You picked {format(selected, 'PPP')}</p>
-    }
-
+const TimeDateSection = ({ selected, setSelected, footer }) => {
+    console.log(selected)
     return (
-        <div>
+        <div className='shadow-lg rounded-lg P-5'>
             <DayPicker
-            // mode='single'
-            // selected={selected}
-            // onSelect={setSelected}
-            // footer={footer}
+                mode='single'
+                selected={selected}
+                onSelect={setSelected}
+                footer={footer}
             ></DayPicker>
         </div>
     );
