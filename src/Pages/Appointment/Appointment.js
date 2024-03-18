@@ -7,7 +7,7 @@ const Appointment = () => {
     const [selected, setSelected] = useState(new Date());
     let footer = "Please pick a date";
     if (selected) {
-        footer = <p>You picked {format(selected, 'PPP')}</p>
+        footer = <p>You picked {format(selected, 'PP')}</p>
     }
 
     return (
@@ -15,7 +15,7 @@ const Appointment = () => {
             <AppointmentSection
                 selected={selected} setSelected={setSelected} footer={footer}>
             </AppointmentSection>
-            <AvailableSlot selected={format(selected, 'PPP')}></AvailableSlot>
+            <AvailableSlot selected={format(selected, 'PP')}></AvailableSlot>
 
         </div>
     );

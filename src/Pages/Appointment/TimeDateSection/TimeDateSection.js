@@ -9,9 +9,10 @@ const TimeDateSection = ({ selected, setSelected, footer }) => {
             <DayPicker
                 mode='single'
                 selected={selected}
-                onSelect={setSelected}
+                onDayClick={setSelected}
                 footer={footer}
             ></DayPicker>
+
         </div>
     );
 };
