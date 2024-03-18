@@ -1,23 +1,39 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import { useForm, SubmitHandler } from "react-hook-form"
 
 const Login = () => {
-    const handelLogin = (event) => {
-        event.preventDefault();
-        const name = event.target.name.value;
-        const email = event.target.email.value;
-        // console.log(name, email)
-        // event.target.reset()
-
+    const { register, formState: { errors }, handleSubmit } = useForm()
+    const handelLogin = (data) => {
+        console.log(data)
     }
+
     return (
-        <div className='flex flex-col'>
-            <form onSubmit={handelLogin}>
-                <input name='name' placeholder='name' className='w-full p-2 rounded-md bg-slate-200'></input>
-                <br></br>
-                <input name='email' placeholder='email' className='w-full p-2 rounded-md bg-slate-200 my-8'></input>
-                <br></br>
-                <input value="Submit" type='submit' className='btn btn-neutral w-full p-2 rounded-md'></input>
-            </form>
+        <div className='lg:h-screen7'>
+            <div className='flex flex-col shadow-lg md:w-96 p-8 mx-auto rounded-xl '>
+                <h3 className='text-center text-xl mb-10'>Login</h3>
+                <form onSubmit={handleSubmit(handelLogin)}>
+                    <label>Email</label>
+                    <input type="text" {...register("email", { required: "Email address is require" })} className="input input-bordered w-full" />
+                    {
+                        errors.email && <p role='alert' className='text-red-400'>{errors.email.message}</p>
+                    }
+
+                    <div className='mt-4'></div>
+                    <label>Password</label>
+                    <input type='password' {...register("password", { minLength: { value: 8, message: "Password must be 8 Character or more" } })} className='input input-bordered w-full p-2 rounded-md'></input>
+                    {
+                        errors.password && <p className='text-red-400 text-xs'>{errors.password.message}</p>
+                    }
+
+                    <p className='text-xs mt-1'>Forgot Password ?</p>
+                    <input value="Login " type='submit' className='btn btn-neutral w-full p-2 rounded-md mt-6 text-lg font-light'></input>
+
+                </form>
+                <p className='text-sm text-center mt-3 mb-5'>New to Doctors Portal? <span className='text-secondary'><Link to="/doctorsportal/signup">Create new account</Link></span></p>
+                <div className="divider divider-neutral">OR</div>
+                <input value="CONTINUE WITH GOOGLE " type='submit' className='btn  w-full p-2 rounded-md mt-3 text-md font-normal'></input>
+            </div>
         </div>
     );
 };

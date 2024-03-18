@@ -4,10 +4,10 @@ import "./Footer.css"
 
 const Footer = () => {
     return (
-        <div className='footer-section' style={{
+        <div className='footer-section ' style={{
             background: `url(${footerImg})`, backgroundSize: "cover", backgroundRepeat: "no-repeat", backgroundPosition: "center"
         }}>
-            <footer className="footer p-10 ">
+            <footer className="footer p-10 static bottom-0 ">
                 <nav>
                     <h6 className="footer-title">Services</h6>
                     <a className="link link-hover">Branding</a>

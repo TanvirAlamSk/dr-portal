@@ -4,7 +4,7 @@ import chairImage from "../../assets/images/chair.png"
 
 const Banner = () => {
     return (
-        <div className="hero min-h-screen mt-8 banner">
+        <div className="hero py-20 my-8 banner">
             <div className="hero-content flex-col lg:flex-row-reverse justify-between gap-4">
                 <div className='lg:w-1/2'>
                     <img src={chairImage} alt='' className="lg:w-4/5 rounded-lg shadow-2xl float-right" />
