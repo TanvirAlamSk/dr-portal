@@ -2,19 +2,22 @@ import React, { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../Context/AuthProvider';
+import toast from 'react-hot-toast';
 
 const Signup = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const { emailpasssignup, loginWithGoogle, updateUser } = useContext(AuthContext)
+    const { emailpasssignup, loginWithGoogle, updateUserInfo } = useContext(AuthContext)
+    // 
     const handelSignup = (data) => {
         const userInfo = {
             displayName: data.name
         }
+        console.log(userInfo)
         emailpasssignup(data.email, data.password)
             .then((userCredential) => {
                 const user = userCredential.user;
-                updateUser(userInfo)
-                    .than(() => { })
+                updateUserInfo(userInfo)
+                    .then(() => toast.success('Successfully Create Your Account!'))
                     .catch((error) => alert(error))
             })
             .catch((error) => alert(error))

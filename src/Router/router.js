@@ -5,6 +5,8 @@ import Login from "../Pages/Login/Login";
 import Appointment from "../Pages/Appointment/Appointment";
 import Signup from "../Pages/Signup/Signup";
 import Secondary from "../Layout/Secondary";
+import About from "../Pages/About/About";
+import PrivateRouter from "./PrivateRouter";
 
 export const router = createBrowserRouter([
     {
@@ -14,6 +16,9 @@ export const router = createBrowserRouter([
             },
             {
                 path: "/appointment", element: <Appointment></Appointment>
+            },
+            {
+                path: "/about", element: <PrivateRouter><About></About></PrivateRouter>
             }
         ]
     },
