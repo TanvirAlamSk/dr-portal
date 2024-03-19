@@ -5,11 +5,28 @@ import { AuthContext } from '../../Context/AuthProvider';
 
 const Signup = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
-    // const { emailpasssignup } = useContext(AuthContext)
+    const { emailpasssignup, loginWithGoogle, updateUser } = useContext(AuthContext)
     const handelSignup = (data) => {
-        console.log(data)
+        const userInfo = {
+            displayName: data.name
+        }
+        emailpasssignup(data.email, data.password)
+            .then((userCredential) => {
+                const user = userCredential.user;
+                updateUser(userInfo)
+                    .than(() => { })
+                    .catch((error) => alert(error))
+            })
+            .catch((error) => alert(error))
+    }
 
+    const handelGoogleLogin = () => {
+        loginWithGoogle()
+            .then((userCredential) => {
+                const user = userCredential.user;
 
+            })
+            .catch((error) => alert(error))
     }
     return (
         <div className='flex flex-col shadow-lg md:w-96 p-8 mx-auto rounded-xl my-4'>
@@ -40,7 +57,7 @@ const Signup = () => {
             </form>
             <p className='text-sm text-center mt-3 mb-5'>Already have an account <span className='text-secondary'><Link to="/doctorsportal/login"> Go for Login</Link></span></p>
             <div className="divider divider-neutral">OR</div>
-            <input value="CONTINUE WITH GOOGLE " type='submit' className='btn w-full p-2 rounded-md mt-3 text-md font-normal'></input>
+            <input value="CONTINUE WITH GOOGLE" type='submit' onClick={handelGoogleLogin} className='btn w-full p-2 rounded-md mt-3 text-md font-normal'></input>
         </div>
     );
 };

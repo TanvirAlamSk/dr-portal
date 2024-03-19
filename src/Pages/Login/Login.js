@@ -1,13 +1,26 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { useForm, SubmitHandler } from "react-hook-form"
+import { AuthContext } from '../../Context/AuthProvider';
 
 const Login = () => {
-    const { register, formState: { errors }, handleSubmit } = useForm()
+    const { register, formState: { errors }, handleSubmit } = useForm();
+    const { emailpasswordlogin, loginWithGoogle } = useContext(AuthContext)
     const handelLogin = (data) => {
-        console.log(data)
+        emailpasswordlogin(data.email, data.password)
+            .then((userCredential) => {
+                const user = userCredential.user;
+                console.log(user)
+            })
+            .catch((error) => alert(error))
     }
-
+    const handelGoogleLogin = () => {
+        loginWithGoogle()
+            .then((userCredential) => {
+                const user = userCredential.user;
+            })
+            .catch((error) => alert(error))
+    }
     return (
         <div className='lg:h-screen7'>
             <div className='flex flex-col shadow-lg md:w-96 p-8 mx-auto rounded-xl '>
@@ -32,7 +45,7 @@ const Login = () => {
                 </form>
                 <p className='text-sm text-center mt-3 mb-5'>New to Doctors Portal? <span className='text-secondary'><Link to="/doctorsportal/signup">Create new account</Link></span></p>
                 <div className="divider divider-neutral">OR</div>
-                <input value="CONTINUE WITH GOOGLE " type='submit' className='btn  w-full p-2 rounded-md mt-3 text-md font-normal'></input>
+                <input value="CONTINUE WITH GOOGLE" type='submit' onClick={handelGoogleLogin} className='btn  w-full p-2 rounded-md mt-3 text-md font-normal'></input>
             </div>
         </div>
     );
