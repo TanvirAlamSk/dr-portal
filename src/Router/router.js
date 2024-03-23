@@ -7,6 +7,8 @@ import Signup from "../Pages/Signup/Signup";
 import Secondary from "../Layout/Secondary";
 import About from "../Pages/About/About";
 import PrivateRouter from "./PrivateRouter";
+import Dashboard from "../Pages/Dashboard/Dashboard";
+import DashboardLayout from "../Layout/DashboardLayout";
 
 export const router = createBrowserRouter([
     {
@@ -30,6 +32,14 @@ export const router = createBrowserRouter([
             {
                 path: "/doctorsportal/signup", element: <Signup></Signup>
             },
+        ]
+    },
+    {
+        path: "/dashboard", element: <DashboardLayout></DashboardLayout>,
+        children: [
+            {
+                path: "/dashboard", element: <Dashboard></Dashboard>
+            }
         ]
     }
 ])

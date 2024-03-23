@@ -1,17 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import AppointmentType from './AppointmentType/AppointmentType';
 import AppointmentModal from './AppointmentType/AppointmentModal/AppointmentModal';
-import { format } from 'date-fns';
+import { useQuery } from '@tanstack/react-query';
 
 const AvailableSlot = ({ selected }) => {
-    const [availableServices, setAvailableServices] = useState([]);
     const [treatment, setTreatment] = useState(null)
 
-    useEffect(() => {
-        fetch("appointmentOptions.json")
-            .then((response) => response.json())
-            .then((data) => setAvailableServices(data))
-    }, [])
+    const { data: availableServices = [] } = useQuery(
+        {
+            queryKey: ["appoinment_collection"],
+            queryFn: () => fetch("http://localhost:5000/appoinment_collection")
+                .then((response) => response.json())
+        }
+    )
+
     return (
         <div className='text-center my-20'>
             <p className='text-secondary font-medium'>Available Services on {selected}</p>
