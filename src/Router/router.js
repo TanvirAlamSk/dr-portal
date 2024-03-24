@@ -9,6 +9,7 @@ import About from "../Pages/About/About";
 import PrivateRouter from "./PrivateRouter";
 import Dashboard from "../Pages/Dashboard/Dashboard";
 import DashboardLayout from "../Layout/DashboardLayout";
+import Users from "../Pages/Users/Users";
 
 export const router = createBrowserRouter([
     {
@@ -39,7 +40,10 @@ export const router = createBrowserRouter([
         children: [
             {
                 path: "/dashboard", element: <Dashboard></Dashboard>
-            }
+            },
+            {
+                path: "/dashboard/users", element: <Users></Users>
+            },
         ]
     }
 ])

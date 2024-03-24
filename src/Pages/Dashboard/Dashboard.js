@@ -1,5 +1,4 @@
 import React, { useContext } from 'react';
-import Navbar from '../../components/Navbar/Navbar';
 import { useQuery } from '@tanstack/react-query';
 import { AuthContext } from '../../Context/AuthProvider';
 
@@ -7,12 +6,13 @@ const Dashboard = () => {
     const { loginUser } = useContext(AuthContext)
     const { data: bookings = [] } = useQuery({
         queryKey: ["bookings"],
-        queryFn: async () => await fetch(`http://localhost:5000/bookings?email=${loginUser?.email}`, {
-            headers: {
-                authorization: `bearer ${localStorage.getItem("Access-Token")}`
-            }
-        })
-            .then((response) => response.json())
+        queryFn: async () =>
+            await fetch(`http://localhost:5000/bookings?email=${loginUser?.email}`, {
+                headers: {
+                    authorization: `bearer ${localStorage.getItem("Access-Token")}`
+                }
+            })
+                .then((response) => response.json())
 
         // ------ same but different way
         //     queryFn: async() => {
@@ -22,7 +22,7 @@ const Dashboard = () => {
         // }
     })
 
-    console.log(localStorage.getItem("Access-Token"))
+
     return (
         <div>
             <div className="overflow-x-auto">

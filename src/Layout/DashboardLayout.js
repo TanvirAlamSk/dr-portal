@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Navbar from '../components/Navbar/Navbar';
-import { Outlet } from 'react-router-dom';
+import { Link, Outlet } from 'react-router-dom';
 
 const DashboardLayout = () => {
     const [drawerdirection, setDrawerdirection] = useState(true)
@@ -19,8 +19,8 @@ const DashboardLayout = () => {
                 <div className="drawer-side mt-[72px] md:mt-0 w-4/5">
                     <label htmlFor="my-drawer-2" aria-label="close sidebar bg-slate-400" className="drawer-overlay"></label>
                     <ul className="menu p-4 w-72 text-white md:text-base-content  mt-10 md:mt-0">
-                        <li><a>Sidebar Item 1</a></li>
-                        <li><a>Sidebar Item 2</a></li>
+                        <li><Link to="/dashboard">My Appointment</Link></li>
+                        <li><Link to="/dashboard/users">All User</Link></li>
                     </ul>
                 </div>
             </div>
