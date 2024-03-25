@@ -1,11 +1,11 @@
 import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
 
 const AddDoctor = () => {
     const { register, handleSubmit } = useForm()
     const imageBBKey = process.env.REACT_APP_imagebb;
-    console.log(imageBBKey)
     const { data: specialtyes = [] } = useQuery({
         queryKey: ["specialty"],
         queryFn: async () => await fetch("http://localhost:5000/appointment-specialty")
@@ -31,9 +31,35 @@ const AddDoctor = () => {
         const img = data.img[0]
         const formData = new FormData()
         formData.append("image", img)
-        fetch(`https://api.imgbb.com/1/upload?key=${imageBBKey}`)
+        fetch(`https://api.imgbb.com/1/upload?key=${imageBBKey}`, {
+            method: "POST",
+            body: formData
+        })
             .then((response) => response.json())
-            .then((data) => console.log(data))
+            .then((data) => {
+                if (data.success) {
+                    const doctorInfo = {
+                        name,
+                        email,
+                        specialty,
+                        photoUrl: data.data.url
+                    }
+                    fetch("http://localhost:5000/doctors", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify(doctorInfo)
+                    })
+                        .then((response) => response.json())
+                        .then((data) => {
+                            if (data.acknowledged) {
+                                toast.success("Doctor Added Successfully")
+                                console.log("done")
+                            }
+                        })
+                }
+            })
     }
     return (
         <div className='flex flex-col  md:w-80 p-5 shadow-2xl mx-auto rounded-xl my-4'>
@@ -99,7 +125,7 @@ const AddDoctor = () => {
                     </select>
                 </div>
                 <div className="form-control  my-6">
-                    <input {...register("img")} type="file" className="file-input file-input-bordered w-full max-w-xs" />
+                    <input {...register("img", { required: "Image is required" })} type="file" className="file-input file-input-bordered w-full max-w-xs" />
                 </div>
 
 
