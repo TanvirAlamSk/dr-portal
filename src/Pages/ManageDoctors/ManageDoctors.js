@@ -1,13 +1,32 @@
 import { useQuery } from '@tanstack/react-query';
-import React from 'react';
+import React, { useState } from 'react';
+import DeleteDoctor from './DeleteDoctor/DeleteDoctor';
+import toast from 'react-hot-toast';
 
 const ManageDoctors = () => {
-    const { data: doctors = [] } = useQuery({
+    const [deleteDocInfo, setDeleteDocInfo] = useState("")
+    const { data: doctors = [], refetch } = useQuery({
         queryKey: ["doctors"],
         queryFn: async () => await fetch("http://localhost:5000/doctors")
             .then((response) => response.json())
     })
-    console.log(doctors.length)
+
+    const handelDeleteDoctor = (id) => {
+        fetch(`http://localhost:5000/doctors/${id}`, {
+            method: "DELETE",
+            headers: {
+                authorization: `bearer ${localStorage.getItem("Access-Token")}`
+            }
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                if (data.deletedCount > 0) {
+                    refetch()
+                    setDeleteDocInfo("")
+                    toast.success("Doctor Delete Successfully")
+                }
+            })
+    }
 
     return (
         <div className="overflow-x-auto">
@@ -36,12 +55,22 @@ const ManageDoctors = () => {
                             <td>{doctor?.name}</td>
                             <td>{doctor.email}</td>
                             <td>{doctor.specialty}</td>
-                            <td><button className='bg-red-500  text-white p-1 rounded'>Delete</button></td>
+                            <td>
+                                <label htmlFor="doctor_modal" className=" bg-red-500  text-white p-1 rounded" onClick={() => setDeleteDocInfo(doctor)}>Delete</label>
+                            </td>
 
                         </tr>)
                     }
                 </tbody>
             </table>
+            {
+                deleteDocInfo &&
+                <DeleteDoctor
+                    deleteDocInfo={deleteDocInfo}
+                    handelDeleteDoctor={handelDeleteDoctor}
+                ></DeleteDoctor>
+            }
+
         </div>
     );
 };

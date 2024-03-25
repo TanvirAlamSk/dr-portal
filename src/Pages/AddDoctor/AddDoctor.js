@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 
 const AddDoctor = () => {
     const { register, handleSubmit } = useForm()
-    const navigate = useNavigate()
+    const navigate = useNavigate();
     const imageBBKey = process.env.REACT_APP_imagebb;
     const { data: specialtyes = [] } = useQuery({
         queryKey: ["specialty"],
