@@ -10,6 +10,8 @@ import PrivateRouter from "./PrivateRouter";
 import Dashboard from "../Pages/Dashboard/Dashboard";
 import DashboardLayout from "../Layout/DashboardLayout";
 import Users from "../Pages/Users/Users";
+import AdminRouter from "./AdminRouter";
+import AddDoctor from "../Pages/AddDoctor/AddDoctor";
 
 export const router = createBrowserRouter([
     {
@@ -42,7 +44,10 @@ export const router = createBrowserRouter([
                 path: "/dashboard", element: <Dashboard></Dashboard>
             },
             {
-                path: "/dashboard/users", element: <Users></Users>
+                path: "/dashboard/users", element: <AdminRouter><Users></Users></AdminRouter>
+            },
+            {
+                path: "/dashboard/add-doctor", element: <AddDoctor></AddDoctor>
             },
         ]
     }
