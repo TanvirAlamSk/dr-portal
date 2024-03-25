@@ -2,9 +2,11 @@ import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 
 const AddDoctor = () => {
     const { register, handleSubmit } = useForm()
+    const navigate = useNavigate()
     const imageBBKey = process.env.REACT_APP_imagebb;
     const { data: specialtyes = [] } = useQuery({
         queryKey: ["specialty"],
@@ -47,7 +49,8 @@ const AddDoctor = () => {
                     fetch("http://localhost:5000/doctors", {
                         method: "POST",
                         headers: {
-                            "Content-Type": "application/json"
+                            "Content-Type": "application/json",
+                            authorization: `bearer ${localStorage.getItem("Access-Token")}`
                         },
                         body: JSON.stringify(doctorInfo)
                     })
@@ -55,7 +58,7 @@ const AddDoctor = () => {
                         .then((data) => {
                             if (data.acknowledged) {
                                 toast.success("Doctor Added Successfully")
-                                console.log("done")
+                                navigate("/dashboard/managedoctor");
                             }
                         })
                 }

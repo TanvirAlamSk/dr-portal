@@ -53,8 +53,6 @@ const Users = () => {
                                 <td><button className='bg-red-500  text-white p-1 rounded'>Delete</button></td>
                             </tr>)
                         }
-
-
                     </tbody>
                 </table>
             </div>
