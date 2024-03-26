@@ -7,7 +7,12 @@ const ManageDoctors = () => {
     const [deleteDocInfo, setDeleteDocInfo] = useState("")
     const { data: doctors = [], refetch } = useQuery({
         queryKey: ["doctors"],
-        queryFn: async () => await fetch("http://localhost:5000/doctors")
+        queryFn: async () => await fetch("http://localhost:5000/doctors", {
+            headers: {
+                authorization: `bearer ${localStorage.getItem("Access-Token")}`
+            }
+        }
+        )
             .then((response) => response.json())
     })
 
